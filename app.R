@@ -26,7 +26,9 @@ kGreen <-  "#00a65a"
 kRed <-    "#dd4b39"
 kRefreshMillis <- 1000 * 60 * 5
 
-header <- dashboardHeader(title = "Coronavirus South Africa", titleWidth = "300")
+
+live <- tags$li(div(id = "headspace", p(id = "rcorners", "LIVE")), class = "dropdown")
+header <- dashboardHeader(title = "Coronavirus South Africa", titleWidth = "300", live)
 sidebar <- dashboardSidebar(disable = T)
 body <- dashboardBody(
   tags$head(
@@ -35,7 +37,9 @@ body <- dashboardBody(
     # tags$meta(name="keywords", content="..."),
     # tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
     tags$link(rel="shortcut icon", href="https://cdn.countryflags.com/thumbs/south-africa/flag-round-250.png"),
-    tags$style(HTML('.skin-green .left-side, .skin-green .main-sidebar, .skin-green .wrapper {background-color: #ecf0f5;}'))
+    tags$style(HTML('.skin-green .left-side, .skin-green .main-sidebar, .skin-green .wrapper {background-color: #ecf0f5;}')),
+    tags$style(HTML('#rcorners {border-radius: 3px; background: #ff3535; padding-left:5px; padding-right:5px; color: #ffffff; font-size: 17px}')),
+    tags$style(HTML('#headspace {padding-top: 13px; padding-right: 13px}'))
   ),
   # Open
   box(
