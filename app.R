@@ -24,6 +24,7 @@ style.plot <- function(gg, color) {
 kOrange <- "#ff851b"
 kGreen <-  "#00a65a"
 kRed <-    "#dd4b39"
+kRefreshMillis <- 1000 * 60 * 5
 
 header <- dashboardHeader(title = "Coronavirus South Africa", titleWidth = "300")
 sidebar <- dashboardSidebar(disable = T)
@@ -85,19 +86,26 @@ server <- function(input, output, session) {
   session$allowReconnect(TRUE)
 
   # South Africa Time Series Data
-  getSATS <- reactive({
-    read.csv("sa_ts.csv") %>%
-      mutate(Date = as.Date(paste0(
-        "20",
-        substr(Date, 7, 8),
-        "-",
-        substr(Date, 1,2),
-        "-",
-        substr(Date, 4, 5)
-      ))) %>%
-      filter(!duplicated(Date)) %>%
-      arrange(Date)
-  })
+  getSATS <- reactivePoll(
+    kRefreshMillis,
+    session,
+    function(){
+      read.csv("sa_ts.csv")
+    },
+    function(){
+      read.csv("sa_ts.csv") %>%
+        mutate(Date = as.Date(paste0(
+          "20",
+          substr(Date, 7, 8),
+          "-",
+          substr(Date, 1,2),
+          "-",
+          substr(Date, 4, 5)
+        ))) %>%
+        filter(!duplicated(Date)) %>%
+        arrange(Date)
+    }
+  )
 
   # Values ------------------------------------------------------------------
 
