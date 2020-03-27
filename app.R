@@ -33,7 +33,8 @@ body <- dashboardBody(
     # tags$meta(name="description", content="..."),
     # tags$meta(name="keywords", content="..."),
     # tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-    tags$link(rel="shortcut icon", href="https://cdn.countryflags.com/thumbs/south-africa/flag-round-250.png")
+    tags$link(rel="shortcut icon", href="https://cdn.countryflags.com/thumbs/south-africa/flag-round-250.png"),
+    tags$style(HTML('.skin-green .left-side, .skin-green .main-sidebar, .skin-green .wrapper {background-color: #ecf0f5;}'))
   ),
   # Open
   box(
