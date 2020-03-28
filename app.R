@@ -32,10 +32,10 @@ header <- dashboardHeader(title = "Coronavirus South Africa", titleWidth = "300"
 sidebar <- dashboardSidebar(disable = T)
 body <- dashboardBody(
   tags$head(
-    # tags$meta(charset="UTF-8"),
-    # tags$meta(name="description", content="..."),
-    # tags$meta(name="keywords", content="..."),
-    # tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+    tags$meta(charset="UTF-8"),
+    tags$meta(name="description", content="Live South African COVID-19 numbers"),
+    tags$meta(name="keywords", content="live,South Africa,South African,update,covid,covid-19,coronavirus,map,dashboard"),
+    tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
     tags$link(rel="shortcut icon", href="https://cdn.countryflags.com/thumbs/south-africa/flag-round-250.png"),
     tags$style(HTML('.skin-green .left-side, .skin-green .main-sidebar, .skin-green .wrapper {background-color: #ecf0f5;}')),
     tags$style(HTML('#rcorners {border-radius: 3px; background: #ff3535; padding-left:5px; padding-right:5px; color: #ffffff; font-size: 17px}')),
