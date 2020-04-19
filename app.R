@@ -46,11 +46,11 @@ body <- dashboardBody(
     width = 4,
     column(
       width = 12,
-      valueBoxOutput("open_val", width = 12),
+      valueBoxOutput("con_val", width = 12),
     ),
     column(
       width = 12,
-      plotOutput("open_plot")
+      plotOutput("con_plot")
     )
 
   ),
@@ -97,15 +97,8 @@ server <- function(input, output, session) {
       read.csv("sa_ts.csv")
     },
     function(){
-      read.csv("sa_ts.csv") %>%
-        mutate(Date = as.Date(paste0(
-          "20",
-          substr(Date, 7, 8),
-          "-",
-          substr(Date, 1,2),
-          "-",
-          substr(Date, 4, 5)
-        ))) %>%
+      read.csv("sa_ts.csv", stringsAsFactors = F) %>%
+        mutate(Date = as.Date(Date)) %>% 
         filter(!duplicated(Date)) %>%
         arrange(Date)
     }
@@ -113,11 +106,11 @@ server <- function(input, output, session) {
 
   # Values ------------------------------------------------------------------
 
-  # Open
-  output$open_val <- renderValueBox({
-    val <- tail(getSATS(), 1)$Open
+  # Confirmed
+  output$con_val <- renderValueBox({
+    val <- tail(getSATS(), 1)$Confirmed
     val <- comma(val)
-    valueBox(val, "Open Cases", icon("stethoscope"), "orange", width = 12)
+    valueBox(val, "Confirmed Cases", icon("stethoscope"), "orange", width = 12)
   })
 
   # Recovered
@@ -137,13 +130,13 @@ server <- function(input, output, session) {
 
   # Plots -------------------------------------------------------------------
 
-  # Open
-  output$open_plot <- renderPlot({
+  # Confirmed
+  output$con_plot <- renderPlot({
     df <- getSATS()
 
     df %>%
-      mutate(`Open Cases` = Open) %>%
-      ggplot(aes(x = Date, y = `Open Cases`, color = "1")) %>%
+      mutate(`Confirmed Cases` = Confirmed) %>%
+      ggplot(aes(x = Date, y = `Confirmed Cases`, color = "1")) %>%
       style.plot(kOrange)
   })
 
@@ -162,8 +155,7 @@ server <- function(input, output, session) {
 
     df %>%
       ggplot(aes(x = Date, y = Deaths, color = "1")) %>%
-      style.plot(kRed) +
-      scale_y_continuous(limits = c(0,4))
+      style.plot(kRed)
   })
 }
 
